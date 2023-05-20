@@ -3,56 +3,49 @@
         {
             "id": 0,
             "mode": "combo",
-            "on_press": true,
-            "keys": ["LEFT_CONTROL", "S"]
-        },
-        {
-            "id": 7,
-            "mode": "press",
-            "on_press": true,
-            "keys": "B"
-        },
-        {
-            "id": 3,
-            "mode": "press",
-            "on_press": true,
-            "keys": "Z"
+            "on_press": ["LEFT_CONTROL", "S"]
         },
         {
             "id": 2,
             "mode": "combo",
-            "on_press": true,
-            "keys": ["LEFT_CONTROL", "D"]
+            "on_press": ["LEFT_CONTROL", "D"]
         },
         {
-            "id": 6,
+            "id": 3,
             "mode": "press",
-            "on_press": true,
-            "keys": "S"
-        },
-        {
-            "id": 10,
-            "mode": "combo",
-            "on_press": true,
-            "keys": ["LEFT_CONTROL", "E", "D"]
-        },
-        {
-            "id": 11,
-            "mode": "press",
-            "on_press": true,
-            "keys": "E"
+            "on_press": "Z"
         },
         {
             "id": 4,
             "mode": "combo",
-            "on_press": true,
-            "keys": ["LEFT_CONTROL", "Z"]
+            "on_press": ["LEFT_CONTROL", "Z"]
+        },
+        {
+            "id": 6,
+            "mode": "press",
+            "on_press": "S"
+        },
+        {
+            "id": 7,
+            "mode": "press",
+            "on_press": "B"
         },
         {
             "id": 8,
             "mode": "combo",
-            "on_press": true,
-            "keys": ["LEFT_CONTROL", "Y"]
+            "on_press": ["LEFT_CONTROL", "Y"]
+        },
+        {
+            "id": 10,
+            "mode": "combo",
+            "on_press": ["S"],
+            "on_release": ["LEFT_CONTROL", "E", "D"]
+            
+        },
+        {
+            "id": 11,
+            "mode": "press",
+            "on_press": "E"
         }
     ],
     "encoders":[

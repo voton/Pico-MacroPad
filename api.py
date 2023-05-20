@@ -60,7 +60,8 @@ def initEncoders(GPIO):
 def keyboard():
     return Keyboard(usb_hid.devices)
 
-def Press(data):
+
+def Press(data):     
     if type(data) == dict:
         MODE = data['mode']
         KEYS = data['keys']
@@ -118,10 +119,10 @@ class MacroBoard:
             key = matrix.key_number
             try: 
                 bind = self.BIND['matrix'][key]
-                if bind['on_press']:
-                    if matrix.pressed: Press(bind)
-                else:
-                    if matrix.released: Press(bind)
+                if 'on_press' in bind:
+                    if matrix.pressed: Press({'mode': bind['mode'], 'keys': bind['on_press']})
+                if 'on_release' in bind:
+                    if matrix.released: Press({'mode': bind['mode'], 'keys': bind['on_release']})
             except(KeyError, IndexError): 
                 if matrix.pressed: print("Button is unset")
             except(KeyError, TypeError):
