@@ -9,19 +9,19 @@ brush = 0
 while True:
     device.CheckMatrix()
     device.CheckEncoders()
+    device.CheckEncButtons()
     
-    BTN = device.listButtons()
-    for num in range(len(BTN)):
-        if BTN[num].value:
-            if num == 2:                
-                if brush == 0: api.Press(['press', 'b'])
-                elif brush == 1: api.Press(['press', 'z'])
-                else: api.Press(['press', 'e'])
+    # BTN = device.listButtons()
+    # for num in range(len(BTN)):
+    #     if BTN[num].value:
+    #         if num == 2:                
+    #             if brush == 0: api.Press(['press', 'b'])
+    #             elif brush == 1: api.Press(['press', 'z'])
+    #             else: api.Press(['press', 'e'])
 
-                brush += 1
-                if brush > 2: brush = 0
+    #             brush += 1
+    #             if brush > 2: brush = 0
 
-                print(brush)
+    #             print(brush)
 
-            time.sleep(.2)
-    
+    #         time.sleep(.2)

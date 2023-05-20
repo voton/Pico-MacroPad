@@ -4,23 +4,101 @@
             "id": 0,
             "mode": "combo",
             "on_press": true,
-            "keys": ["A", "B"]
+            "keys": ["LEFT_CONTROL", "S"]
+        },
+        {
+            "id": 7,
+            "mode": "press",
+            "on_press": true,
+            "keys": "B"
+        },
+        {
+            "id": 3,
+            "mode": "press",
+            "on_press": true,
+            "keys": "Z"
+        },
+        {
+            "id": 2,
+            "mode": "combo",
+            "on_press": true,
+            "keys": ["LEFT_CONTROL", "D"]
+        },
+        {
+            "id": 6,
+            "mode": "press",
+            "on_press": true,
+            "keys": "S"
+        },
+        {
+            "id": 10,
+            "mode": "combo",
+            "on_press": true,
+            "keys": ["LEFT_CONTROL", "E", "D"]
+        },
+        {
+            "id": 11,
+            "mode": "press",
+            "on_press": true,
+            "keys": "E"
+        },
+        {
+            "id": 4,
+            "mode": "combo",
+            "on_press": true,
+            "keys": ["LEFT_CONTROL", "Z"]
+        },
+        {
+            "id": 8,
+            "mode": "combo",
+            "on_press": true,
+            "keys": ["LEFT_CONTROL", "Y"]
         }
     ],
     "encoders":[
         {
-            "id": 2,
+            "id": 0,
             "click":{
-                "mode": "",
-                "keys": ""
+                "mode": "combo",
+                "keys": ["LEFT_ALT", "SIX"]
             },
             "left":{
                 "mode": "combo",
-                "keys": ["LEFT_ALT", "KEYPAD_MINUS "]
+                "keys": ["LEFT_ALT", "NINE"]
             },
             "right":{
                 "mode": "combo",
-                "keys": ["LEFT_ALT", "KEYPAD_PLUS "]
+                "keys": ["LEFT_ALT", "ZERO"]
+            }
+        },
+        {
+            "id": 1,
+            "click":{
+                "mode": "combo",
+                "keys": ["LEFT_ALT", "FIVE"]
+            },
+            "left":{
+                "mode": "combo",
+                "keys": ["LEFT_ALT", "EIGHT"]
+            },
+            "right":{
+                "mode": "combo",
+                "keys": ["LEFT_ALT", "SEVEN"]
+            }
+        },
+        {
+            "id": 2,
+            "click":{
+                "mode": "press",
+                "keys": "x"
+            },
+            "left":{
+                "mode": "combo",
+                "keys": ["LEFT_SHIFT", "KEYPAD_MINUS "]
+            },
+            "right":{
+                "mode": "combo",
+                "keys": ["LEFT_SHIFT", "KEYPAD_PLUS "]
             }
         }
     ]

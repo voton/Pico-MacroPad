@@ -82,6 +82,7 @@ def Press(data):
 
             keys = f"Keycode.{KEY}"
             ExecPress(keys)
+    
 def ExecPress(keys):
     exec(f"keyboard.press({keys})")
     exec(f"time.sleep(.01)")
@@ -141,6 +142,15 @@ class MacroBoard:
                     POS[0] = POS[1]
             except(KeyError, IndexError): pass
             except(KeyError, TypeError): pass
+
+    def CheckEncButtons(self):
+        BTN = self.BUTTON
+        for x in range(len(BTN)):
+            if BTN[x].value:
+                try: 
+                    Press(self.BIND['encoders'][x]['click'])
+                    time.sleep(.5)
+                except(KeyError, IndexError): print("Button is unset")
 
     def listButtons(self):
         return self.BUTTON
