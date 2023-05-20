@@ -43,7 +43,6 @@ def initButtons(GPIO):
         BTN.append(temp)
 
     return BTN
-
 def initMatrix(GPIO):
     matrix = keypad.KeyMatrix(
         column_pins=(GPIO['columns']),
@@ -51,7 +50,6 @@ def initMatrix(GPIO):
     )
 
     return matrix
-
 def initEncoders(GPIO):
     ENC = []
     for PIN in GPIO:
@@ -63,30 +61,27 @@ def keyboard():
     return Keyboard(usb_hid.devices)
 
 def Press(data):
-    MODE = data['mode']
-    KEYS = data['keys']
-
-    if MODE == 'press':
-        for KEY in KEYS:
-            keys = f"Keycode.{KEY}"
-            ExecPress(keys)
-
+    if type(data) == dict:
+        MODE = data['mode']
+        KEYS = data['keys']
+    else:
+        MODE = data[0]
+        KEYS = data[1]
+    
     if MODE == 'combo':
         TEMP = []
         for KEY in KEYS: 
             TEMP.append(f"Keycode.{KEY}")
         
         keys = ', '.join(TEMP)
-        ExecPress(keys)
-    
-    if MODE == 'write':
+        ExecPress(keys)      
+    if MODE == 'press':
         for LETTER in KEYS:
             KEY = LETTER.upper()
             KEY = KEY.replace(' ', 'SPACE')
 
-            keys = f"keycode.{KEY}"
+            keys = f"Keycode.{KEY}"
             ExecPress(keys)
-
 def ExecPress(keys):
     exec(f"keyboard.press({keys})")
     exec(f"time.sleep(.01)")
@@ -94,13 +89,27 @@ def ExecPress(keys):
     exec(f"time.sleep(.01)")
 
 class MacroBoard:
-    def __init__(self):
+    def __init__(self, bind):
         self.GPIO = loadGPIO()
-        self.BIND = loadConfig('bind/default')
+        self.BIND = self.loadBinds(bind)
 
-        self.BUTTON = initButtons(self.GPIO['buttons'])
         self.MATRIX = initMatrix(self.GPIO['matrix'])
+        self.BUTTON = initButtons(self.GPIO['buttons'])
         self.ENCODER = initEncoders(self.GPIO['encoders'])
+
+    def loadBinds(self, bind):
+        GPIO = self.GPIO
+        BIND = {"matrix": [], "encoders": []}
+    
+        for _ in range(len(GPIO['encoders'])): BIND['encoders'].append('')
+        for _ in range(len(GPIO['matrix']['columns']) * len(GPIO['matrix']['rows'])): BIND['matrix'].append('')
+
+        DATA = loadConfig(bind)
+        for item in DATA:
+            for row in DATA[item]:
+                BIND[item][row['id']] = row
+
+        return BIND
 
     def CheckMatrix(self):
         matrix = self.MATRIX.events.get()
@@ -112,12 +121,16 @@ class MacroBoard:
                     if matrix.pressed: Press(bind)
                 else:
                     if matrix.released: Press(bind)
-            except(KeyError, IndexError): print("Button is unset")
+            except(KeyError, IndexError): 
+                if matrix.pressed: print("Button is unset")
+            except(KeyError, TypeError):
+                if matrix.pressed: print("Button is unset")
 
     def CheckEncoders(self):
         for x in range(len(self.ENCODER)):
             POS = self.ENCODER[x][0]
             ENC = self.ENCODER[x][1]
+
             try:
                 BIND = self.BIND['encoders'][x]
 
@@ -126,14 +139,8 @@ class MacroBoard:
                     if POS[0] > POS[1]: Press(BIND['left'])
                     if POS[0] < POS[1]: Press(BIND['right'])
                     POS[0] = POS[1]
-
-                    print(POS)
             except(KeyError, IndexError): pass
-        
-        BTN = self.BUTTON
-        for x in range(len(BTN)):
-            if BTN[x].value:
-                try: 
-                    Press(self.BIND['encoders'][x]['click'])
-                    time.sleep(.5)
-                except(KeyError, IndexError): print("Button is unset")
+            except(KeyError, TypeError): pass
+
+    def listButtons(self):
+        return self.BUTTON
