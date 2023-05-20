@@ -2,51 +2,52 @@
     "matrix":[
         {
             "id": 0,
-            "mode": "combo",
-            "on_press": ["LEFT_CONTROL", "S"]
-        },
-        {
-            "id": 2,
-            "mode": "combo",
-            "on_press": ["LEFT_CONTROL", "D"]
-        },
-        {
-            "id": 3,
             "mode": "press",
             "on_press": "Z"
         },
         {
-            "id": 4,
-            "mode": "combo",
-            "on_press": ["LEFT_CONTROL", "Z"]
-        },
-        {
-            "id": 6,
-            "mode": "press",
-            "on_press": "S"
-        },
-        {
-            "id": 7,
+            "id": 1,
             "mode": "press",
             "on_press": "B"
         },
         {
-            "id": 8,
-            "mode": "combo",
-            "on_press": ["LEFT_CONTROL", "Y"]
+            "id": 2,
+            "mode": "press",
+            "on_press": "E"
         },
         {
-            "id": 10,
+            "id": 3,
+            "mode": "combo",
+            "on_press": ["LEFT_CONTROL", "D"]
+        },
+        {
+            "id": 4,
+            "mode": "press",
+            "on_press": "S"
+        },
+        {
+            "id": 5,
             "mode": "combo",
             "on_press": ["S"],
             "on_release": ["LEFT_CONTROL", "E", "D"]
             
         },
         {
-            "id": 11,
-            "mode": "press",
-            "on_press": "E"
+            "id": 12,
+            "mode": "combo",
+            "on_press": ["LEFT_CONTROL", "Z"]
+        },
+        {
+            "id": 13,
+            "mode": "combo",
+            "on_press": ["LEFT_CONTROL", "S"]
+        },
+        {
+            "id": 14,
+            "mode": "combo",
+            "on_press": ["LEFT_CONTROL", "Y"]
         }
+        
     ],
     "encoders":[
         {
