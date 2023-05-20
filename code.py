@@ -1,4 +1,5 @@
 import time
+import json
 
 import board
 import keypad
@@ -9,7 +10,23 @@ import usb_hid
 from adafruit_hid.keycode import Keycode
 from adafruit_hid.keyboard import Keyboard
 
-def convert_GPIO(data):
+def loadConfig(file):
+    file = open(f'config/{file}.json')
+    config = json.load(file)
+    file.close()
+
+    return config
+
+def loadGPIO():
+    DATA = loadConfig('GPIO')
+    print(DATA['matrix'])
+
+    GPIO_ENC = convertGPIO(DATA['encoders'])
+    GPIO_MTX = convertGPIO([DATA['matrix']['columns'], DATA['matrix']['rows']])
+    GPIO_BTN = convertGPIO(DATA['buttons'])
+
+    return GPIO_ENC, GPIO_MTX, GPIO_BTN
+def convertGPIO(data):
     if type(data[0]) == list:
         for x in range(len(data)):
             for y in range(len(data[x])):
@@ -20,13 +37,41 @@ def convert_GPIO(data):
 
     return data
 
-GPIO = [[19, 20, 21],
-        [[0, 1, 2, 3], [16, 17, 18]],
-        [[14, 15], [12, 13], [10, 11]]]
 
-GPIO_ENC = convert_GPIO(GPIO[2])
-GPIO_MTX = convert_GPIO(GPIO[1])
-GPIO_BTN = convert_GPIO(GPIO[0])
+def Press(data):
+    MODE = data['mode']
+    KEYS = data['keys']
+
+    if MODE == 'press':
+        for KEY in KEYS:
+            keys = f"Keycode.{KEY}"
+            ExecPress(keys)
+
+    if MODE == 'combo':
+        TEMP = []
+        for KEY in KEYS: 
+            TEMP.append(f"Keycode.{KEY}")
+        
+        keys = ', '.join(TEMP)
+        ExecPress(keys)
+    
+    if MODE == 'write':
+        for LETTER in KEYS:
+            KEY = LETTER.upper()
+            KEY = KEY.replace(' ', 'SPACE')
+
+            keys = f"keycode.{KEY}"
+            ExecPress(keys)
+def ExecPress(keys):
+        exec(f"keyboard.press({keys})")
+        exec(f"time.sleep(.01)")
+        exec(f"keyboard.release({keys})")
+        exec(f"time.sleep(.01)")
+
+GPIO_ENC, GPIO_MTX, GPIO_BTN = loadGPIO()
+BINDS = loadConfig('bind/default')
+
+print(BINDS)
 
 ENC = []
 POS = []
@@ -47,25 +92,39 @@ MTX = keypad.KeyMatrix(
     row_pins=(GPIO_MTX[1]),
 )
 
+keyboard = Keyboard(usb_hid.devices)
+
 while True:
     event = MTX.events.get()
     if event:
-        print(event)
+        key = event.key_number
+        bind = BINDS['matrix'][key]
+        if bind['on_press']:
+            if event.pressed:
+                Press(bind)
+        else:
+            if event.released:
+                Press(bind)
 
     for x in range(len(ENC)):
+        bind = BINDS['encoders'][x]
+        
         POS[x][1] = ENC[x].position
         if POS[x][0] != POS[x][1]:
             if POS[x][0] > POS[x][1]:
                 print("-1")
+                Press(bind['left'])
             if POS[x][0] < POS[x][1]:
                 print("+1")
+                Press(bind['right'])
             
             POS[x][0] = POS[x][1]
-            print(POS[x][0])
 
-    for x in BTN:
-        if x.value:
-            print(x)
+    for x in range(len(BTN)):
+        if BTN[x].value:
+            bind = BINDS['encoders'][x]['click']
+            Press(bind)
+
             time.sleep(.5)
     
     time.sleep(.1)

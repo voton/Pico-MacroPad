@@ -1,0 +1,81 @@
+{
+    "matrix":[
+        {
+            "id": 0,
+            "mode": "combo",
+            "on_press": true,
+            "keys": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 1,
+            "mode": "combo",
+            "on_press": false,
+            "keys": [
+                "A",
+                "B"
+            ]
+        }
+    ],
+    "encoders":[
+        {
+            "id": 0,
+            "click":{
+                "mode": "press",
+                "keys": "A"
+            },
+            "left":{
+                "mode": "press",
+                "keys": "B"
+            },
+            "right":{
+                "mode": "press",
+                "keys": "C"
+            }
+        },
+        {
+            "id": 1,
+            "click":{
+                "mode": "press",
+                "keys": [
+                    
+                ] 
+            },
+            "left":{
+                "mode": "press",
+                "keys": [
+                    
+                ]
+            },
+            "right":{
+                "mode": "press",
+                "keys": [
+                    
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "click":{
+                "mode": "press",
+                "keys": [
+                    
+                ] 
+            },
+            "left":{
+                "mode": "press",
+                "keys": [
+                    
+                ]
+            },
+            "right":{
+                "mode": "press",
+                "keys": [
+                    
+                ]
+            }
+        }
+    ]
+}
